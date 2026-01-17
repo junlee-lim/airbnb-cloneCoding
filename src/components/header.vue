@@ -1,5 +1,19 @@
 <script setup>
+import { ref } from 'vue';
 
+// 현재 선택된 탭을 저장 (기본값: 'stay')
+const activeTab = ref('stay');
+
+// 탭 클릭 시 변경하는 함수
+const setActive = (tab) => {
+  activeTab.value = tab;
+};
+
+const tabIndex = {
+  stay: 0,
+  experience: 1,
+  service: 1.95
+};
 </script>
 
 
@@ -7,21 +21,31 @@
 <body>
     <div class="container">
         <div class="logo">
-            <img src="/src/img/Airbnb_Logo_Bélo.svg.png" alt="Airbnb">
+            <img src="/src/img/Airbnb_Logo_Bélo.svg.png" alt="Airbnb" class="tab-img">
         </div>
         <div class="search">
-            <div class="search-item">
-                <img src="/src/img/4aae4ed7-5939-4e76-b100-e69440ebeae4.avif" alt="accommodation">
-                <span>숙소</span>
+            <div class="search-line" @click="setActive('stay')">
+                <div class="search-item" :class="{ 'is-active': activeTab === 'stay' }">
+                    <img src="/src/img/4aae4ed7-5939-4e76-b100-e69440ebeae4.avif" alt="accommodation" class="tab-img">
+                    <span :class="activeTab === 'stay' ? 'active-text' : 'inactive-text'">숙소</span>
+                </div>
+                <!-- <div v-if="activeTab === 'stay'" class="Bline"></div> -->
             </div>
-            <div class="search-item">
-                <img src="/src/img/e47ab655-027b-4679-b2e6-df1c99a5c33d.avif" alt="accommodation">
-                <span>체험</span>
+            <div class="search-line" @click="setActive('experience')">
+                <div class="search-item" :class="{ 'is-active': activeTab === 'experience' }">
+                    <img src="/src/img/e47ab655-027b-4679-b2e6-df1c99a5c33d.avif" alt="experience" class="tab-img">
+                    <span :class="activeTab === 'experience' ? 'active-text' : 'inactive-text'">체험</span>
+                </div>
+                <!-- <div v-if="activeTab === 'experience'" class="Bline"></div> -->
             </div>
-            <div class="search-item">
-                <img src="/src/img/3d67e9a9-520a-49ee-b439-7b3a75ea814d.avif" alt="accommodation">
-                <span>서비스</span>
+            <div class="search-line" @click="setActive('service')">
+                <div class="search-item" :class="{ 'is-active': activeTab === 'service' }">
+                    <img src="/src/img/3d67e9a9-520a-49ee-b439-7b3a75ea814d.avif" alt="sevice" class="tab-img">
+                    <span :class="activeTab === 'service' ? 'active-text' : 'inactive-text'">서비스</span>
+                </div>
+                <!-- <div v-if="activeTab === 'sevice'" class="Bline"></div> -->
             </div>
+            <div class="Bline" :style="{ transform: `translateX(${tabIndex[activeTab] * 110}px)` }"></div>
         </div>
 
       <div class="hosting">
@@ -68,12 +92,11 @@
 </template>
 
 <style scoped>
-body {background-image: linear-gradient(white, rgb(230, 230, 230));}
+body {background-image: linear-gradient(white, rgb(240, 240, 240));}
 .container {width: 100%; height: 90px; display: flex; align-items: center; justify-content:space-between;}
-.logo img {width: 102px; height: 32px; margin-left: 20px;}
-.search {display: flex; gap: 30px; justify-content: center;}
+.logo img {width: 102px; height: 32px; margin-left: 20px; cursor: pointer;}
+.search {display: flex; gap: 5px; justify-content: center; position: relative;}
 .search-item {display: flex; align-items: center; cursor: pointer;}
-.search-item img {width: 80px;}
 
 .hosting {margin-right: 20px; display: flex; align-items: center;}
 .hosting svg {width: 20px;}
@@ -94,6 +117,7 @@ body {background-image: linear-gradient(white, rgb(230, 230, 230));}
 .label {font-size: 12px; font-weight: 500; color: black;}
 .value {font-size: 14px; color: gray;}
 .line {width: 1px; height: 32px; background-color: lightgray;}
+.Bline {width: 30%; height: 3px; bottom: 0; left: 0; background-color: black; margin-left: 10px; margin-top: -5px; position: absolute; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);}
 
 .right {display: inline-flex; align-items: center; justify-content: center; position: relative; margin-left: 5px; cursor: pointer;
         position: absolute; right: 5px;}
@@ -105,4 +129,42 @@ body {background-image: linear-gradient(white, rgb(230, 230, 230));}
     background-color: transparent; /* 또는 white */
     cursor: default; /* 돋보기 위에서는 화살표 포인터 유지 */
 }
+
+.tab-img {
+  width: 70px;
+  transition: transform 0.2s ease;
+}
+/* 활성화되지 않은(클릭 안 된) 아이템에 마우스를 올렸을 때만 확대 */
+.search-item:not(.is-active):hover .tab-img {
+  transform: scale(1.15);
+}
+/* 활성화된 아이템에는 효과 제거 */
+.search-item.is-active {
+  cursor: default;
+}
+@keyframes clickBounce {
+  0% {transform: scale(1);}
+  50% {transform: scale(0.6);}
+  100% {transform: scale(1);}
+}
+.search-item.is-active .tab-img {
+  animation: clickBounce 0.6s ease;
+}
+/* 텍스트 스타일 분리 */
+.active-text {
+  font-weight: bold;
+  color: black;
+}
+.inactive-text {
+  font-weight: 400;
+  color: gray;
+}
+/* 기존 search-line 스타일 수정 */
+.search-line {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
 </style>
