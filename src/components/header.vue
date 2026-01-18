@@ -101,8 +101,8 @@ body {background-image: linear-gradient(white, rgb(240, 240, 240));}
 .hosting {margin-right: 20px; display: flex; align-items: center;}
 .hosting svg {width: 20px;}
 .hosting p {font-size: 15px; margin: 0; font-weight: 500; padding: 10px;}
-.globe {width: 40px; padding: 10px;cursor: pointer;}
-.burger {width: 40px; padding: 10px; cursor: pointer;}
+.globe {width: 40px; padding: 10px; cursor: pointer; background-color: rgb(237, 236, 236); border-radius: 50%; margin-left: 10px;}
+.burger {width: 40px; padding: 10px; cursor: pointer; background-color: rgb(237, 236, 236); border-radius: 50%; margin-left: 10px;}
 .hostText:hover {background-color: lightgray; cursor: pointer; border-radius: 30px; transition: background-color 0.2s ease;}
 .globe:hover {background-color: lightgray; cursor: pointer; border-radius: 50%; transition: background-color 0.2s ease;}
 .burger:hover {background-color: lightgray; cursor: pointer; border-radius: 50%; transition: background-color 0.2s ease;}

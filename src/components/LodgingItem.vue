@@ -46,7 +46,7 @@ const props = defineProps({
 .likeButton svg {width: 30px; height: 30px; transition: transform 0.3s ease;}
 .likeButton:hover svg {transform: scale(1.1);}
 
-.item { width: 200px;}
+.item { width: 100%;}
 .item:not(:first-child) {margin-left: 10px;}
 .item img { width: 200px; border-radius: 15px; height: 180px;}
 
